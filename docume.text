@@ -1,0 +1,11 @@
+student_management/
+├── frontend/
+│   ├── index.html
+│   └── vercel.json          # Vercel配置
+├── backend/
+│   ├── main.py              # FastAPI后端
+│   ├── database.py          # SQLite数据库
+│   ├── requirements.txt
+│   └── Procfile             # Render配置
+└── data/
+    └── students.db          # SQLite数据库文件
