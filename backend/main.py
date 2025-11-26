@@ -1,15 +1,11 @@
-"""
-学生管理系统 - FastAPI后端
-"""
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import Optional
 from database import StudentDB, NoteDB, init_database
 
 app = FastAPI(title="学生管理系统API")
 
-# CORS配置
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -19,7 +15,6 @@ app.add_middleware(
 )
 
 
-# 数据模型
 class Student(BaseModel):
     student_id: str
     name: str
@@ -36,19 +31,15 @@ class Note(BaseModel):
     is_pinned: Optional[int] = 0
 
 
-# 启动时初始化数据库
 @app.on_event("startup")
 async def startup():
     init_database()
 
 
-# 根路径
 @app.get("/")
 async def root():
     return {"message": "学生管理系统API运行中"}
 
-
-# ========== 学生API ==========
 
 @app.get("/api/students")
 async def get_students():
@@ -74,8 +65,6 @@ async def delete_student(student_id: int):
         return {"success": True}
     raise HTTPException(status_code=404, detail="学生不存在")
 
-
-# ========== 便签API ==========
 
 @app.get("/api/notes")
 async def get_notes():
